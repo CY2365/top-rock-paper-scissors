@@ -1,17 +1,20 @@
-const outcomes = ["Rock", "Paper", "Scissors"]
+const outcomes = ["Rock", "Paper", "Scissors"];
+let userScore = 0;
+let aiScore = 0;
+let result;
 
 // Randomly picks one of the three options from the outcomes array.
 function computerPlay() {
     return outcomes[Math.floor(Math.random() * outcomes.length)];
 }
 
-function playRound() {
-    const userSelection = prompt('Choose Rock, Paper or Scissors..')
-                        .toLowerCase();
+// Plays one round of rock paper scissors.
+function playRound(selection) {
+    const userSelection = selection
     const computerSelection = computerPlay().toLowerCase();
+    let theResult;
     
-    console.log(`You chose: ${userSelection}`);
-    console.log(`'AI' chose: ${computerSelection}.`);
+    
 
     switch (computerSelection) {
         // Computer has:
@@ -19,36 +22,44 @@ function playRound() {
             // User has:
             switch (userSelection) {
                 case 'rock':
-                    return 'It\'s a tie';
+                    theResult = 'It\'s a tie';
                     break;
                 case 'paper':
-                    return 'You won';
+                    userScore += 1;
+                    updateScore();
+                    theResult = 'You won';
                     break;
                 case 'scissors':
-                    return 'You lost';
+                    aiScore += 1;
+                    updateScore();
+                    theResult = 'You lost';
                     break;
                 default:
-                    return 'Choose one';
-                    break;
+                    theResult = 'Choose one';
+                    
             }
             break;
-        
+
         // Computer has:
         case 'paper':
             // User has:
             switch (userSelection) {
                 case 'rock':
-                    return 'You lost';
+                    aiScore += 1;
+                    updateScore();
+                    theResult = 'You lost';
                     break;
                 case 'paper':
-                    return 'It\'s a tie';
+                    theResult = 'It\'s a tie';
                     break;
                 case 'scissors':
-                    return 'You won';
+                    userScore += 1;
+                    updateScore();
+                    theResult = 'You won';
                     break;
                     default:
-                return 'Choose one';
-                break;
+                    theResult = 'Choose one';
+                
             }
             break;
         
@@ -57,27 +68,71 @@ function playRound() {
             // User has:
             switch (userSelection) {
                 case 'rock':
-                    return 'You won';
+                    userScore += 1;
+                    updateScore();
+                    theResult = 'You won';
                     break;
                 case 'paper':
-                    return 'You lost';
+                    updateScore();
+                    aiScore += 1;
+                    theResult = 'You lost';
                     break;
                 case 'scissors':
-                    return 'It\'s a tie';
+                    theResult = 'It\'s a tie';
                     break;
                     default:
-                return 'Choose one';
-                break;
+                    theResult = 'Choose one';
+                ;
             }
             break; 
     }
+    updateResult(userSelection, computerSelection, theResult);
+    
 }
 
-// Loops 5 times to playRound 5 times.
-function game() {
-    for (let times = 0; times < 5; times++) {
-    console.log(playRound())
-    }
+function updateScore() {
+    let user = document.querySelector('.userscore')
+    let ai = document.querySelector('.aiscore')
+
+    user.textContent = `User score: ${userScore}`
+    ai.textContent = `AI score: ${aiScore}`
 }
 
-game()
+function updateResult(userSelection, computerSelection, result) {
+    let resultDiv = document.querySelector('.result');
+    resultDiv.textContent = `You chose: ${capitalizeFirstLetter(userSelection)}
+AI chose: ${capitalizeFirstLetter(computerSelection)}
+${result}`;
+}
+
+
+function game(e) {
+    if (userScore < 5 && aiScore < 5) {
+        playRound(e.target.id);
+        if (userScore == 5) {
+            let resultCont = document.querySelector('.result');
+            resultCont.textContent = 'You won the game';
+            userScore = 0; 
+            aiScore = 0;
+            updateScore();
+        } if (aiScore == 5) {
+            let resultCont = document.querySelector('.result');
+            resultCont.textContent = 'You lost the game';
+            userScore = 0;
+            aiScore = 0;
+            updateScore();
+        }
+    } 
+}
+
+function addListener(e) {
+    e.addEventListener('click', game)
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+
+const buttons = document.querySelectorAll('.button')
+buttons.forEach(addListener)
