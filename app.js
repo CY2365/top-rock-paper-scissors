@@ -14,8 +14,6 @@ function playRound(selection) {
     const computerSelection = computerPlay().toLowerCase();
     let theResult;
     
-    
-
     switch (computerSelection) {
         // Computer has:
         case 'rock':
@@ -59,7 +57,6 @@ function playRound(selection) {
                     break;
                     default:
                     theResult = 'Choose one';
-                
             }
             break;
         
@@ -86,8 +83,7 @@ function playRound(selection) {
             }
             break; 
     }
-    updateResult(userSelection, computerSelection, theResult);
-    
+    updateResult(userSelection, computerSelection, theResult); 
 }
 
 function updateScore() {
@@ -132,7 +128,6 @@ function addListener(e) {
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
-
 
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(addListener)

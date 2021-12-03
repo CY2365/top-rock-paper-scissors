@@ -1,12 +1,11 @@
 body {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
     gap: 60px;
-    background-color: #161853;
+    background-color: #222831;
     color: #FAEDF0;
     font-family:Arial, Helvetica, sans-serif;
 }
@@ -21,7 +20,7 @@ body {
 .result {
     white-space: pre;
     text-align: center;
-    min-height: 80px;
+    min-height: 90px;
     font-size: 25px;
 }
 
@@ -32,10 +31,10 @@ body {
 }
 
 .button {
-    background-color: #292C6D;
+    background-color: #00ADB5;
     color: white;
     border-style: none;
-    padding: 25px;
+    padding: 15px 20px;
     border-radius: 15px;
     width: 150px;
     font-weight: bold;
